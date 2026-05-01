@@ -362,6 +362,7 @@ Include:
   PasswordHash (string), CreatedAt (DateTime)
 - TaskStatus enum
 No dependencies on any other project or NuGet package.
+Each class should have it's on file as needed (following Clean Architecture principles of responsability)
 ```
 
 ### Prompt 2 — Application Interfaces
