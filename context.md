@@ -375,7 +375,25 @@ Create the Application layer interfaces for a Task Manager .NET 8 app.
 - No EF, no Dapper, no MediatR
 ```
 
-### Prompt 3 — Application Services
+### Prompt 3 — Tests (TDD style — write BEFORE implementation, expect RED)
+```
+Write xUnit tests for TaskService in a .NET 8 app using Moq.
+IMPORTANT: These tests should be written BEFORE the implementation exists and are expected to FAIL initially (RED phase of TDD).
+
+Test these cases:
+1. CreateAsync throws ValidationException when Title is empty
+2. CreateAsync throws ValidationException when DueDate is in the past
+3. CreateAsync calls repository when input is valid
+4. GetAllAsync returns only tasks for the given userId
+5. DeleteAsync throws UnauthorizedException when task belongs to different user
+
+Use:
+- Mock<ITaskRepository>
+- FluentAssertions for assertions
+- [Fact] and [Theory] where appropriate
+```
+
+### Prompt 4 — Application Services (implement until GREEN)
 ```
 Create TaskService and AuthService for a .NET 8 Clean Architecture app.
 TaskService:
@@ -392,7 +410,7 @@ AuthService:
 JWT secret from IConfiguration["Jwt:Secret"]
 ```
 
-### Prompt 4 — Infrastructure (ADO.NET)
+### Prompt 5 — Infrastructure (ADO.NET)
 ```
 Implement TaskRepository and UserRepository for .NET 8 using ADO.NET only.
 - Use SqlConnection and SqlCommand (System.Data.SqlClient)
@@ -404,7 +422,7 @@ Implement TaskRepository and UserRepository for .NET 8 using ADO.NET only.
 - Map SqlDataReader manually to entities
 ```
 
-### Prompt 5 — Controllers
+### Prompt 6 — Controllers
 ```
 Create ASP.NET Web API controllers for a Task Manager app.
 TaskController (route: api/tasks):
@@ -424,21 +442,7 @@ AuthController (route: api/auth):
 Use proper HTTP status codes. Return ProblemDetails on validation errors (400).
 ```
 
-### Prompt 6 — Tests (TDD style)
-```
-Write xUnit tests for TaskService in a .NET 8 app using Moq.
-Test these cases:
-1. CreateAsync throws ValidationException when Title is empty
-2. CreateAsync throws ValidationException when DueDate is in the past
-3. CreateAsync calls repository when input is valid
-4. GetAllAsync returns only tasks for the given userId
-5. DeleteAsync throws UnauthorizedException when task belongs to different user
 
-Use:
-- Mock<ITaskRepository>
-- FluentAssertions for assertions
-- [Fact] and [Theory] where appropriate
-```
 
 ### Prompt 7 — React Frontend
 ```

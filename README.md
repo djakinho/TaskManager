@@ -58,13 +58,13 @@ TaskManager/
 ## Prerequisites
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8)
-- [Node.js 20 LTS](https://nodejs.org/)
+- [Node.js 22 LTS](https://nodejs.org/)
 - SQL Server LocalDB (included with Visual Studio) or SQL Server Express
 
 Verify:
 ```bash
 dotnet --version   # 8.x.x
-node --version     # v20.x.x
+node --version     # v22.x.x
 sqlcmd -?          # confirm SQL tools available
 ```
 
