@@ -51,6 +51,17 @@ public class TaskService
         return _taskRepository.GetAllByUserAsync(userId);
     }
 
+    public async Task<TaskItem?> GetByIdAsync(Guid id, Guid userId)
+    {
+        var task = await _taskRepository.GetByIdAsync(id);
+        if (task is null || task.UserId != userId)
+        {
+            return null;
+        }
+
+        return task;
+    }
+
     public async Task UpdateAsync(TaskItem task, Guid userId)
     {
         if (task is null)
