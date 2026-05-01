@@ -92,7 +92,7 @@ public class TaskServiceTests
     }
 
     [Fact]
-    public async Task DeleteAsync_ShouldThrowUnauthorizedException_WhenTaskBelongsToDifferentUser()
+    public async Task DeleteAsync_ShouldThrowNotFoundException_WhenTaskBelongsToDifferentUser()
     {
         var userId = Guid.NewGuid();
         var taskOwnerId = Guid.NewGuid();
@@ -113,6 +113,6 @@ public class TaskServiceTests
         var service = CreateService();
 
         await FluentActions.Invoking(() => service.DeleteAsync(task.Id, userId))
-            .Should().ThrowAsync<UnauthorizedException>();
+            .Should().ThrowAsync<NotFoundException>();
     }
 }
