@@ -1,4 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using TaskManager.Domain;
+using DomainTaskStatus = TaskManager.Domain.TaskStatus;
 
 namespace TaskManager.Application;
 
@@ -11,23 +13,89 @@ public class TaskService
         _taskRepository = taskRepository;
     }
 
-    public Task CreateAsync(TaskItem task, Guid userId)
+    public async Task CreateAsync(TaskItem task, Guid userId)
     {
-        throw new NotImplementedException();
+        if (task is null)
+        {
+            throw new ValidationException("Task is required.");
+        }
+
+        if (string.IsNullOrWhiteSpace(task.Title))
+        {
+            throw new ValidationException("Title is required.");
+        }
+
+        if (task.Title.Length > 200)
+        {
+            throw new ValidationException("Title must be 200 characters or fewer.");
+        }
+
+        if (!Enum.IsDefined(typeof(DomainTaskStatus), task.Status))
+        {
+            throw new ValidationException("Status is invalid.");
+        }
+
+        if (task.DueDate <= DateTime.UtcNow)
+        {
+            throw new ValidationException("DueDate must be in the future.");
+        }
+
+        task.UserId = userId;
+        task.CreatedAt = DateTime.UtcNow;
+
+        await _taskRepository.CreateAsync(task);
     }
 
     public Task<IEnumerable<TaskItem>> GetAllAsync(Guid userId)
     {
-        throw new NotImplementedException();
+        return _taskRepository.GetAllByUserAsync(userId);
     }
 
-    public Task UpdateAsync(TaskItem task, Guid userId)
+    public async Task UpdateAsync(TaskItem task, Guid userId)
     {
-        throw new NotImplementedException();
+        if (task is null)
+        {
+            throw new ValidationException("Task is required.");
+        }
+
+        if (string.IsNullOrWhiteSpace(task.Title))
+        {
+            throw new ValidationException("Title is required.");
+        }
+
+        if (task.Title.Length > 200)
+        {
+            throw new ValidationException("Title must be 200 characters or fewer.");
+        }
+
+        if (!Enum.IsDefined(typeof(DomainTaskStatus), task.Status))
+        {
+            throw new ValidationException("Status is invalid.");
+        }
+
+        if (task.DueDate <= DateTime.UtcNow)
+        {
+            throw new ValidationException("DueDate must be in the future.");
+        }
+
+        var existingTask = await _taskRepository.GetByIdAsync(task.Id);
+        if (existingTask is null || existingTask.UserId != userId)
+        {
+            throw new NotFoundException("Task not found.");
+        }
+
+        task.UserId = userId;
+        await _taskRepository.UpdateAsync(task);
     }
 
-    public Task DeleteAsync(Guid id, Guid userId)
+    public async Task DeleteAsync(Guid id, Guid userId)
     {
-        throw new NotImplementedException();
+        var existingTask = await _taskRepository.GetByIdAsync(id);
+        if (existingTask is null || existingTask.UserId != userId)
+        {
+            throw new NotFoundException("Task not found.");
+        }
+
+        await _taskRepository.DeleteAsync(id);
     }
 }
