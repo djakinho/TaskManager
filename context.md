@@ -17,10 +17,8 @@ This drives every design decision. Keep it simple. Refer to it in your presentat
 | Database   | SQL Server (LocalDB or full) | You know it; no learning curve                |
 | Auth       | JWT Bearer Token             | Simple, no Identity overhead                  |
 | Tests      | xUnit + Moq                  | Modern standard; easy to explain              |
-| Frontend   | React + Vite                 | Fast to scaffold; you know Angular but React  |
-|            |                              | is lighter for this scope                     |
+| Frontend   | Angular                      | You know it; no learning curve                |
 
-> ✅ If you prefer Angular, use it — you're more fluent. Just keep it clean.
 
 ---
 
@@ -445,20 +443,16 @@ Use proper HTTP status codes. Return ProblemDetails on validation errors (400).
 
 
 
-### Prompt 7 — React Frontend
+### Prompt 7 — Angular Frontend
 ```
-Create a React (Vite) frontend for a Task Manager API.
+Create an Angular frontend (latest stable, standalone components) for a Task Manager API.
 Pages:
-- /login — email + password form → POST /api/auth/login → store token in sessionStorage → redirect to /tasks
-- /tasks — protected route; list tasks from GET /api/tasks; show title, status, due date
 - Create task button → modal or inline form
-- Edit/Delete per task row
 
 Components:
-- TaskList, TaskForm (create/edit), LoginPage
-- Axios client with Authorization Bearer token interceptor
-- React Router for navigation
-- Redirect to /login if no token
+- TaskList, TaskForm (create/edit), LoginComponent
+- HttpClient with Authorization Bearer token interceptor
+- Angular Router with AuthGuard
 
 Keep it functional and clean. No heavy UI libraries — plain CSS or minimal Tailwind is fine.
 ```
