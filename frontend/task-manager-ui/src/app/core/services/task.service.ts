@@ -12,30 +12,18 @@ export class TaskService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Task[]> {
-    return this.http.get<Task[]>(`${environment.apiUrl}/task`).pipe(
-      tap(tasks => this.tasksSubject.next(tasks))
-    );
+    return this.http.get<Task[]>(`${environment.apiUrl}/task`);
   }
 
   create(dto: CreateTaskDto): Observable<Task> {
-    return this.http.post<Task>(`${environment.apiUrl}/task`, dto).pipe(
-      tap(() => this.refreshTasks())
-    );
+    return this.http.post<Task>(`${environment.apiUrl}/task`, dto);
   }
 
   update(id: string, dto: UpdateTaskDto): Observable<Task> {
-    return this.http.put<Task>(`${environment.apiUrl}/task/${id}`, dto).pipe(
-      tap(() => this.refreshTasks())
-    );
+    return this.http.put<Task>(`${environment.apiUrl}/task/${id}`, dto);
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${environment.apiUrl}/task/${id}`).pipe(
-      tap(() => this.refreshTasks())
-    );
-  }
-
-  private refreshTasks(): void {
-    this.getAll().subscribe({ error: () => {} });
+    return this.http.delete<void>(`${environment.apiUrl}/task/${id}`);
   }
 }

@@ -77,8 +77,6 @@ export class TaskFormComponent implements OnChanges {
       dueDate: dueDateValue
     };
 
-    console.log('Submitting task:', dto);
-
     const request = this.task
       ? this.taskService.update(this.task.id, dto as UpdateTaskDto)
       : this.taskService.create(dto as CreateTaskDto);

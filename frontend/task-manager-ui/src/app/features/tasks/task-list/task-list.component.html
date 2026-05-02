@@ -11,36 +11,42 @@
     <button (click)="openCreate()">New Task</button>
   </div>
 
-  <div class="status" *ngIf="errorMessage">{{ errorMessage }}</div>
-  <div class="status" *ngIf="loading">Loading tasks...</div>
+  <ng-container *ngIf="viewState$ | async as vm">
+    <div class="status" *ngIf="vm.errorMessage">{{ vm.errorMessage }}</div>
+    <div class="status" *ngIf="vm.loading">Loading tasks...</div>
 
-  <div class="task-grid" *ngIf="!loading && tasks.length > 0">
-    <article class="task-card" *ngFor="let task of tasks">
-      <div class="task-card-header">
-        <h2>{{ task.title }}</h2>
-        <span
-          class="status-badge"
-          [ngClass]="{
-            todo: task.status === TaskStatus.Todo,
-            inprogress: task.status === TaskStatus.InProgress,
-            done: task.status === TaskStatus.Done
-          }"
-        >
-          {{ TaskStatus[task.status] }}
-        </span>
+    <div *ngIf="!vm.loading">
+      <div class="task-grid" *ngIf="vm.tasks.length; else emptyState">
+        <article class="task-card" *ngFor="let task of vm.tasks">
+          <div class="task-card-header">
+            <h2>{{ task.title }}</h2>
+            <span
+              class="status-badge"
+              [ngClass]="{
+                todo: task.status === TaskStatus.Todo,
+                inprogress: task.status === TaskStatus.InProgress,
+                done: task.status === TaskStatus.Done,
+              }"
+            >
+              {{ TaskStatus[task.status] }}
+            </span>
+          </div>
+          <p>{{ task.description }}</p>
+          <p><strong>Due:</strong> {{ task.dueDate | date: 'mediumDate' }}</p>
+          <div class="task-card-actions">
+            <button (click)="openEdit(task)">Edit</button>
+            <button (click)="deleteTask(task)">Delete</button>
+          </div>
+        </article>
       </div>
-      <p>{{ task.description }}</p>
-      <p><strong>Due:</strong> {{ task.dueDate | date:'mediumDate' }}</p>
-      <div class="task-card-actions">
-        <button (click)="openEdit(task)">Edit</button>
-        <button (click)="deleteTask(task)">Delete</button>
-      </div>
-    </article>
-  </div>
 
-  <div *ngIf="!loading && tasks.length === 0">
-    <p>No tasks yet. Create your first task.</p>
-  </div>
+      <ng-template #emptyState>
+        <div class="empty-state">
+          <p>No tasks yet. Create your first task.</p>
+        </div>
+      </ng-template>
+    </div>
+  </ng-container>
 
   <app-task-form
     *ngIf="showForm"
