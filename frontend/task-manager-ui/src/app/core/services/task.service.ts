@@ -19,19 +19,23 @@ export class TaskService {
 
   create(dto: CreateTaskDto): Observable<Task> {
     return this.http.post<Task>(`${environment.apiUrl}/tasks`, dto).pipe(
-      tap(() => this.getAll().subscribe())
+      tap(() => this.refreshTasks())
     );
   }
 
   update(id: string, dto: UpdateTaskDto): Observable<Task> {
     return this.http.put<Task>(`${environment.apiUrl}/tasks/${id}`, dto).pipe(
-      tap(() => this.getAll().subscribe())
+      tap(() => this.refreshTasks())
     );
   }
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${environment.apiUrl}/tasks/${id}`).pipe(
-      tap(() => this.getAll().subscribe())
+      tap(() => this.refreshTasks())
     );
+  }
+
+  private refreshTasks(): void {
+    this.getAll().subscribe({ error: () => {} });
   }
 }
