@@ -1,0 +1,135 @@
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.55);
+  padding: 1rem;
+}
+
+.task-form-overlay {
+  width: 100%;
+  max-width: 540px;
+}
+
+.task-form-panel {
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.18);
+  border: 1px solid #e5e7eb;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  color: #111827;
+}
+
+.close-button {
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+form {
+  display: grid;
+  gap: 1rem;
+}
+
+label {
+  font-weight: 600;
+  color: #374151;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  border-radius: 0.85rem;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  color: #111827;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font: inherit;
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+  background: #ffffff;
+}
+
+.error {
+  color: #dc2626;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+button[type="submit"],
+.cancel-button {
+  flex: 1;
+  min-width: 140px;
+  border: none;
+  border-radius: 0.85rem;
+  padding: 0.95rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button[type="submit"] {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+button[type="submit"]:disabled,
+.cancel-button:disabled,
+.close-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.cancel-button {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+@media (max-width: 500px) {
+  .task-form-panel {
+    padding: 1.25rem;
+  }
+
+  button[type="submit"],
+  .cancel-button {
+    width: 100%;
+  }
+}

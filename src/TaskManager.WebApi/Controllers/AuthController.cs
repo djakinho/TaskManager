@@ -37,7 +37,7 @@ public class AuthController : ControllerBase
             };
 
             await _authService.RegisterAsync(user, dto.Password);
-            return StatusCode(StatusCodes.Status201Created);
+            return StatusCode(StatusCodes.Status201Created, new { });
         }
         catch (ValidationException ex)
         {
