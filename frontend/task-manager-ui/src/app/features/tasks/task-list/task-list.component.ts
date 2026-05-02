@@ -25,7 +25,7 @@ export class TaskListComponent implements OnInit {
     this.loadTasks();
   }
 
-  loadTasks() {
+  loadTasks(): void {
     this.loading = true;
     this.errorMessage = '';
     this.taskService.getAll().subscribe({
@@ -35,6 +35,7 @@ export class TaskListComponent implements OnInit {
       },
       error: () => {
         this.loading = false;
+        this.tasks = [];
         this.errorMessage = 'Unable to load tasks.';
       }
     });

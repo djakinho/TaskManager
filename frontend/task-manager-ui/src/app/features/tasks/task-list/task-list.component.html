@@ -18,7 +18,16 @@
     <article class="task-card" *ngFor="let task of tasks">
       <div class="task-card-header">
         <h2>{{ task.title }}</h2>
-        <span class="status-badge">{{ task.status }}</span>
+        <span
+          class="status-badge"
+          [ngClass]="{
+            todo: task.status === 'Todo',
+            inprogress: task.status === 'InProgress',
+            done: task.status === 'Done'
+          }"
+        >
+          {{ task.status }}
+        </span>
       </div>
       <p>{{ task.description }}</p>
       <p><strong>Due:</strong> {{ task.dueDate | date:'mediumDate' }}</p>

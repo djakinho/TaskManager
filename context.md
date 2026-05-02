@@ -258,7 +258,7 @@ Minimum viable UI — judge by structure, not beauty:
 ### Axios config tip:
 ```js
 // api/client.js
-const client = axios.create({ baseURL: 'http://localhost:5000/api' });
+const client = axios.create({ baseURL: 'http://localhost:5048/api' });
 
 client.interceptors.request.use(config => {
   const token = sessionStorage.getItem('token');
