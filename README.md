@@ -1,6 +1,6 @@
 # Task Manager
 
-A full-stack task management application built with .NET 8, ASP.NET Web API, and React.  
+A full-stack task management application built with .NET 8, ASP.NET Web API, and Angular.  
 Developed as a technical interview exercise following Clean Architecture principles and TDD.
 
 ---
@@ -24,7 +24,7 @@ TaskManager/
 ├── tests/
 │   └── TaskManager.Tests/           # xUnit + Moq unit tests
 ├── frontend/
-│   └── task-manager-ui/             # React + Vite
+│   └── task-manager-ui/             # Angular
 ├── sql/
 │   ├── schema.sql                   # Table definitions
 │   └── seed.sql                     # Demo data
@@ -51,7 +51,7 @@ TaskManager/
 | Database       | SQL Server (LocalDB)               |
 | Auth           | JWT Bearer Token + BCrypt          |
 | Tests          | xUnit, Moq, FluentAssertions       |
-| Frontend       | React 18 + Vite + Axios            |
+| Frontend       | Angular                            |
 
 ---
 
@@ -112,8 +112,8 @@ dotnet run
 ```bash
 cd frontend/task-manager-ui
 npm install
-npm run dev
-# UI available at: http://localhost:5173
+npm start
+# UI available at: http://localhost:4200
 ```
 
 ---
