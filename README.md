@@ -80,10 +80,10 @@ cd task-manager
 
 ### 2. Database
 ```bash
-# Create the database and tables
+# Run script to create Users and Tasks tables
 sqlcmd -S "(localdb)\mssqllocaldb" -i sql/schema.sql
 
-# Insert demo data
+# Run seed script to populate initial data
 sqlcmd -S "(localdb)\mssqllocaldb" -d TaskManagerDb -i sql/seed.sql
 ```
 
