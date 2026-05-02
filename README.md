@@ -242,6 +242,8 @@ Generate a .NET 8 Web API using Clean Architecture with the following:
 ### Takeaway
 AI is effective for scaffolding boilerplate and remembering syntax. Critical thinking is required for security boundaries (user isolation, secret management) and for ensuring the output matches architectural constraints (no ORM, correct layer dependencies).
 
+A comprehensive log of GenAI interactions, including specific prompts, validation strategies, and representative output samples, can be found in the [genai-section.md](genai-section.md) file.
+
 ---
 
 ## What I'd Add With More Time
