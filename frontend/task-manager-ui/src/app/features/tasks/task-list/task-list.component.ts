@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { TaskService } from '../../../core/services/task.service';
-import { Task } from '../../../shared/models/task.model';
+import { Task, TaskStatus } from '../../../shared/models/task.model';
 
 @Component({
   selector: 'app-task-list',
@@ -18,6 +18,7 @@ export class TaskListComponent implements OnInit {
   errorMessage = '';
   selectedTask: Task | null = null;
   showForm = false;
+  readonly TaskStatus = TaskStatus;
 
   constructor(private taskService: TaskService, private authService: AuthService) {}
 

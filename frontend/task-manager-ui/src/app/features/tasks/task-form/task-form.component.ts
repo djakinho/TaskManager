@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Task, TaskStatus, UpdateTaskDto } from '../../../shared/models/task.model';
+import { Task, TaskStatus, CreateTaskDto, UpdateTaskDto } from '../../../shared/models/task.model';
 import { TaskService } from '../../../core/services/task.service';
 
 @Component({
@@ -19,18 +19,23 @@ export class TaskFormComponent implements OnChanges {
 
   loading = false;
   errorMessage = '';
-  statusOptions: TaskStatus[] = ['Todo', 'InProgress', 'Done'];
+  statusOptions = [
+    { label: 'Todo', value: TaskStatus.Todo },
+    { label: 'InProgress', value: TaskStatus.InProgress },
+    { label: 'Done', value: TaskStatus.Done }
+  ] as const;
+  readonly TaskStatus = TaskStatus;
 
   form = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.maxLength(200)]),
     description: new FormControl(''),
-    status: new FormControl<TaskStatus>('Todo', [Validators.required]),
+    status: new FormControl<number>(TaskStatus.Todo, [Validators.required]),
     dueDate: new FormControl('', [Validators.required])
   });
 
   constructor(private taskService: TaskService) {}
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['task'] && this.task) {
       this.form.setValue({
         title: this.task.title,
@@ -46,16 +51,18 @@ export class TaskFormComponent implements OnChanges {
     }
   }
 
-  submit() {
+  submit(): void {
     if (this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
 
     const dueDateValue = this.form.value.dueDate as string;
-    const selectedDate = new Date(dueDateValue);
-    const now = new Date();
+    const dueDate = new Date(dueDateValue);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-    if (selectedDate <= now) {
+    if (dueDate <= today) {
       this.errorMessage = 'Due date must be in the future.';
       return;
     }
@@ -63,14 +70,18 @@ export class TaskFormComponent implements OnChanges {
     this.loading = true;
     this.errorMessage = '';
 
-    const dto: UpdateTaskDto = {
+    const dto: CreateTaskDto | UpdateTaskDto = {
       title: this.form.value.title ?? '',
       description: this.form.value.description ?? '',
-      status: this.form.value.status ?? 'Todo',
+      status: Number(this.form.value.status) as TaskStatus,
       dueDate: dueDateValue
     };
 
-    const request = this.task ? this.taskService.update(this.task.id, dto) : this.taskService.create(dto);
+    console.log('Submitting task:', dto);
+
+    const request = this.task
+      ? this.taskService.update(this.task.id, dto as UpdateTaskDto)
+      : this.taskService.create(dto as CreateTaskDto);
 
     request.subscribe({
       next: () => {
@@ -84,12 +95,12 @@ export class TaskFormComponent implements OnChanges {
     });
   }
 
-  cancel() {
+  cancel(): void {
     this.cancelled.emit();
   }
 
-  private resetForm() {
-    this.form.reset({ title: '', description: '', status: 'Todo', dueDate: '' });
+  private resetForm(): void {
+    this.form.reset({ title: '', description: '', status: TaskStatus.Todo, dueDate: '' });
     this.errorMessage = '';
     this.loading = false;
   }

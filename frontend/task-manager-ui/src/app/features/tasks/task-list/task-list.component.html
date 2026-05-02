@@ -21,12 +21,12 @@
         <span
           class="status-badge"
           [ngClass]="{
-            todo: task.status === 'Todo',
-            inprogress: task.status === 'InProgress',
-            done: task.status === 'Done'
+            todo: task.status === TaskStatus.Todo,
+            inprogress: task.status === TaskStatus.InProgress,
+            done: task.status === TaskStatus.Done
           }"
         >
-          {{ task.status }}
+          {{ TaskStatus[task.status] }}
         </span>
       </div>
       <p>{{ task.description }}</p>

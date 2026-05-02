@@ -1,32 +1,35 @@
 <div class="task-form-overlay" *ngIf="visible">
   <div class="task-form-panel">
-    <h2>{{ task ? 'Edit Task' : 'New Task' }}</h2>
+    <div class="panel-header">
+      <h2>{{ task ? 'Edit Task' : 'New Task' }}</h2>
+      <button type="button" class="close-button" (click)="cancel()" [disabled]="loading">×</button>
+    </div>
 
     <form [formGroup]="form" (ngSubmit)="submit()">
-      <label>Title</label>
-      <input type="text" formControlName="title" />
+      <label for="taskTitle">Title</label>
+      <input id="taskTitle" type="text" formControlName="title" />
       <div class="error" *ngIf="form.get('title')?.touched && form.get('title')?.invalid">
         <div *ngIf="form.get('title')?.errors?.['required']">Title is required.</div>
         <div *ngIf="form.get('title')?.errors?.['maxlength']">Title cannot exceed 200 characters.</div>
       </div>
 
-      <label>Description</label>
-      <textarea formControlName="description"></textarea>
+      <label for="taskDescription">Description</label>
+      <textarea id="taskDescription" formControlName="description"></textarea>
 
-      <label>Status</label>
-      <select formControlName="status">
-        <option *ngFor="let status of statusOptions" [ngValue]="status">{{ status }}</option>
+      <label for="taskStatus">Status</label>
+      <select id="taskStatus" formControlName="status">
+        <option *ngFor="let option of statusOptions" [value]="option.value">{{ option.label }}</option>
       </select>
 
-      <label>Due Date</label>
-      <input type="date" formControlName="dueDate" />
+      <label for="taskDueDate">Due Date</label>
+      <input id="taskDueDate" type="date" formControlName="dueDate" />
       <div class="error" *ngIf="form.get('dueDate')?.touched && form.get('dueDate')?.invalid">
         <div *ngIf="form.get('dueDate')?.errors?.['required']">Due date is required.</div>
       </div>
 
       <div class="form-actions">
-        <button type="submit" [disabled]="loading">Save</button>
-        <button type="button" (click)="cancel()" [disabled]="loading">Cancel</button>
+        <button type="submit" [disabled]="loading">{{ loading ? (task ? 'Saving...' : 'Creating...') : 'Save' }}</button>
+        <button type="button" class="cancel-button" (click)="cancel()" [disabled]="loading">Cancel</button>
       </div>
     </form>
 
