@@ -10,40 +10,74 @@
     </div>
 
     <label for="loginPassword">Password</label>
-    <input id="loginPassword" type="password" formControlName="password" autocomplete="current-password" />
-    <div class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+    <input
+      id="loginPassword"
+      type="password"
+      formControlName="password"
+      autocomplete="current-password"
+    />
+    <div
+      class="error"
+      *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+    >
       <div *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
-      <div *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters.</div>
+      <div *ngIf="loginForm.get('password')?.errors?.['minlength']">
+        Password must be at least 8 characters.
+      </div>
     </div>
 
     <button type="submit" [disabled]="loading">{{ loading ? 'Logging in...' : 'Login' }}</button>
   </form>
 
-  <form *ngIf="isRegistering" [formGroup]="registerForm" (ngSubmit)="submitRegister()" class="auth-form">
+  <form
+    *ngIf="isRegistering"
+    [formGroup]="registerForm"
+    (ngSubmit)="submitRegister()"
+    class="auth-form"
+  >
     <label for="registerName">Name</label>
     <input id="registerName" type="text" formControlName="name" autocomplete="name" />
-    <div class="error" *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid">
+    <div
+      class="error"
+      *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid"
+    >
       <div *ngIf="registerForm.get('name')?.errors?.['required']">Name is required.</div>
     </div>
 
     <label for="registerEmail">Email</label>
     <input id="registerEmail" type="email" formControlName="email" autocomplete="email" />
-    <div class="error" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+    <div
+      class="error"
+      *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
+    >
       <div *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</div>
       <div *ngIf="registerForm.get('email')?.errors?.['email']">Enter a valid email.</div>
     </div>
 
     <label for="registerPassword">Password</label>
-    <input id="registerPassword" type="password" formControlName="password" autocomplete="new-password" />
-    <div class="error" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+    <input
+      id="registerPassword"
+      type="password"
+      formControlName="password"
+      autocomplete="new-password"
+    />
+    <div
+      class="error"
+      *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid"
+    >
       <div *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</div>
-      <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters.</div>
+      <div *ngIf="registerForm.get('password')?.errors?.['minlength']">
+        Password must be at least 8 characters.
+      </div>
     </div>
 
-    <button type="submit" [disabled]="loading">{{ loading ? 'Registering...' : 'Register' }}</button>
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Registering...' : 'Register' }}
+    </button>
   </form>
 
-  <div class="message" *ngIf="errorMessage">{{ errorMessage }}</div>
+  <div class="message-success" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="message-error" *ngIf="errorMessage">{{ errorMessage }}</div>
   <div class="toggle-action">
     <button type="button" class="link-button" (click)="toggleRegister()">
       {{ isRegistering ? 'Back to login' : "Don't have an account? Register" }}

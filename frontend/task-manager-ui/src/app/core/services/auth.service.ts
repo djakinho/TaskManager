@@ -9,12 +9,15 @@ import { LoginDto, RegisterDto } from '../../shared/models/user.model';
 export class AuthService {
   private readonly tokenKey = 'task-manager-token';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
   login(dto: LoginDto) {
-    return this.http.post<{ token: string }>(`${environment.apiUrl}/auth/login`, dto).pipe(
-      tap(response => sessionStorage.setItem(this.tokenKey, response.token))
-    );
+    return this.http
+      .post<{ token: string }>(`${environment.apiUrl}/auth/login`, dto)
+      .pipe(tap((response) => sessionStorage.setItem(this.tokenKey, response.token)));
   }
 
   register(dto: RegisterDto) {
