@@ -33,27 +33,31 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   submitLogin() {
-    if (this.loginForm.invalid) {
-      return;
-    }
+    if (this.loginForm.invalid) return;
 
     this.loading = true;
     this.errorMessage = '';
 
-    this.authService.login(this.loginForm.value as LoginDto).subscribe({
-      next: () => {
-        this.loading = false;
-        this.router.navigate(['/task']);
-      },
-      error: () => {
-        this.loading = false;
-        this.errorMessage = 'Invalid email or password.';
-      },
-    });
+    this.authService
+      .login(this.loginForm.value as LoginDto)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          this.cdr.detectChanges();
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/task']);
+        },
+        error: () => {
+          this.errorMessage = 'Invalid email or password.';
+        },
+      });
   }
 
   submitRegister() {
